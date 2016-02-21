@@ -1,0 +1,20 @@
+{
+	"version": "2",
+	"credentials": {
+		"accessKeyId": "NKZ1L29S4GP01J6IOD6F",
+		"secretAccessKey": "5w2WzW3Y6wNQbdQEADYD2USWlvx9vh4j+fgYOd4b",
+		"region": "us-east-1"
+	},
+	"mongoLogger": {
+		"addr": "",
+		"db": "",
+		"collection": ""
+	},
+	"syslogLogger": {
+		"network": "",
+		"addr": ""
+	},
+	"fileLogger": {
+		"filename": ""
+	}
+}

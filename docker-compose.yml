@@ -1,0 +1,33 @@
+minio:
+  image: minio/minio
+  volumes:
+    #- $PWD/export:/export
+    - $PWD/minioconf:/.minio
+
+postgres:
+  image: postgres
+  environment:
+    - POSTGRES_PASSWORD=blabla
+    - POSTGRES_USER=deploy
+    - POSTGRES_DB=test
+
+
+backupdb:
+  environment:
+    POSTGRES_DB: test
+    CRON_TIME: '* * * * *'
+    #INIT_RESTORE_URL: myminio/databases/blabla.sql
+    INIT_BACKUP: 'true'
+    MINIO_ACCESS_KEY: NKZ1L29S4GP01J6IOD6F
+    MINIO_HOST: myminio
+    MINIO_HOST_URL: http://minio:9000
+    MINIO_SECRET_KEY: 5w2WzW3Y6wNQbdQEADYD2USWlvx9vh4j+fgYOd4b
+    MINIO_BUCKET: testdb
+    MYSQL_USER: root
+    MYSQL_PASS: pass
+  build: .
+  links:
+    - postgres:postgres
+    - minio:minio
+  volumes:
+  - backuptest:/backup
