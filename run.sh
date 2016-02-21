@@ -22,7 +22,8 @@ export PGPASSWORD="${POSTGRES_PASSWORD}"
 
 BACKUP_CMD="pg_dump -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U ${POSTGRES_USER} -f /backup/\${BACKUP_NAME} ${EXTRA_OPTS} ${POSTGRES_DB}"
 
-if [ -n ${MINIO_HOST} ]; then
+echo ${MINIO_HOST}
+if [ -n "${MINIO_HOST}" ]; then
 	[ -z "${MINIO_HOST_URL}" ] && { echo "=> MINIO_HOST_URL cannot be empty" && exit 1; }
 	[ -z "${MINIO_ACCESS_KEY}" ] && { echo "=> MINIO_ACCESS_KEY cannot be empty" && exit 1; }
 	[ -z "${MINIO_SECRET_KEY}" ] && { echo "=> MINIO_SECRET_KEY cannot be empty" && exit 1; }
