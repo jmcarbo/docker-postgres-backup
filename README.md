@@ -8,7 +8,7 @@ This image runs pg_dump to backup data using cronjob to folder `/backup`
         --env PG_HOST=mysql.host \
         --env PG_PORT=27017 \
         --env PG_USER=admin \
-        --env PG_PASS=password \
+        --env PG_PASSWORD=password \
         --volume host.folder:/backup
         jmcarbo/docker-postgres-backup
 
@@ -22,7 +22,7 @@ Moreover, if you link `jmcarbo/docker-postgres-backup` to a postgres container (
     POSTGRES_HOST      the host/ip of your postgres database
     POSTGRES_PORT      the port number of your postgres database
     POSTGRES_USER      the username of your postgres database
-    POSTGRES_PASS      the password of your postgres database
+    POSTGRES_PASSWORD      the password of your postgres database
     POSTGRES_DB        the database name to dump. Default: `--all-databases`
     EXTRA_OPTS      the extra options to pass to pg_dump command
     CRON_TIME       the interval of cron job to run pg_dump. `0 0 * * *` by default, which is every day at 00:00
