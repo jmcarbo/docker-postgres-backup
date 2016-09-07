@@ -29,10 +29,16 @@ if [ -n "${MINIO_HOST}" ]; then
 	[ -z "${MINIO_SECRET_KEY}" ] && { echo "=> MINIO_SECRET_KEY cannot be empty" && exit 1; }
 	[ -z "${MINIO_BUCKET}" ] && { echo "=> MINIO_BUCKET cannot be empty" && exit 1; }
 
+	while ! curl -s ${MINIO_HOST_URL}
+	do
+		echo "waiting for minio container..."
+		sleep 1
+	done
+
 	mkdir -p "$HOME/.mc"
 cat <<EOF >"$HOME/.mc/config.json"
 {
-	"version": "7",
+	"version": "8",
 	"hosts": {
 	"${MINIO_HOST}": {
 	"url": "${MINIO_HOST_URL}",
@@ -60,7 +66,7 @@ EOF
 	fi
 
 	echo $RESTIC_PASSWORD
-	BACKUP_RESTIC_CMD="/usr/local/bin/restic backup /backup"
+	BACKUP_RESTIC_CMD="/usr/local/bin/restic backup /backup && /usr/local/bin/restic forget ${RESTIC_FORGET} && /usr/local/bin/restic prune"
 	export RESTIC_PASSWORD=$(mc cat "${MINIO_HOST}/${MINIO_BUCKET}/restic_password.txt")
 
 cat <<EOF >>/root/.bashrc
