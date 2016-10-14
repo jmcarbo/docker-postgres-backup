@@ -51,7 +51,8 @@ cat <<EOF >"$HOME/.mc/config.json"
 EOF
 	echo $RESTIC_PASSWORD
 
-	if mc ls "${MINIO_HOST}/${MINIO_BUCKET}"; 
+        mc ls "${MINIO_HOST}/${MINIO_BUCKET}"
+        if [[ $? -eq 1 ]];
 	then 
 	        mc mb "${MINIO_HOST}/${MINIO_BUCKET}" 
 		echo "Bucket ${MINIO_BUCKET} created" 
