@@ -51,9 +51,10 @@ cat <<EOF >"$HOME/.mc/config.json"
 EOF
 	echo $RESTIC_PASSWORD
 
-	if mc mb "${MINIO_HOST}/${MINIO_BUCKET}"; 
+	if mc ls "${MINIO_HOST}/${MINIO_BUCKET}"; 
 	then 
-		echo "Bucket ${MINIO_BUCKET} created"; 
+	        mc mb "${MINIO_HOST}/${MINIO_BUCKET}" 
+		echo "Bucket ${MINIO_BUCKET} created" 
 		echo "$RESTIC_PASSWORD"	| mc pipe "${MINIO_HOST}/${MINIO_BUCKET}/restic_password.txt"
 		mc mb "${MINIO_HOST}/${MINIO_BUCKET}restic"
 		export AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY}
@@ -61,7 +62,7 @@ EOF
 		export RESTIC_PASSWORD
 		restic -r "s3:${MINIO_HOST_URL}/${MINIO_BUCKET}restic" init
 	else 
-		echo "Bucket ${MINIO_BUCKET} already exists"; 
+		echo "Bucket ${MINIO_BUCKET} already exists" 
 		RESTIC_PASSWORD=$(mc cat "${MINIO_HOST}/${MINIO_BUCKET}/restic_password.txt")
 	fi
 
