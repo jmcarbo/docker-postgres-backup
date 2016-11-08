@@ -134,7 +134,7 @@ if [ -n "\${MINIO_HOST}" ]; then
 	export RESTIC_REPOSITORY=s3:${MINIO_HOST_URL}/${MINIO_BUCKET}restic
 fi
 echo "=> Restore database from \$1"
-if psql -h${POSTGRES_HOST} -P${MYSQL_PORT} -U${POSTGRES_USER} < \$1 ;then
+if psql -h${POSTGRES_HOST} -p${POSTGRES_PORT} -U${POSTGRES_USER} < \$1 ;then
     echo "   Restore succeeded"
 else
     echo "   Restore failed"
