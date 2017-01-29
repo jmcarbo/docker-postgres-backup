@@ -6,7 +6,7 @@ RUN apt-get update && \
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main 9.5" >/etc/apt/sources.list.d/postgresql.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt-get update && \
-    apt-get install -y postgresql-9.5 curl && \
+    apt-get install -y postgresql-9.6 curl && \
     curl https://dl.minio.io/client/mc/release/linux-amd64/mc > /usr/local/bin/mc && \
     chmod +x /usr/local/bin/mc && \ 
     mkdir /backup
