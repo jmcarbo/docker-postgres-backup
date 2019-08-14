@@ -108,10 +108,11 @@ if ${BACKUP_CMD} ;then
       while [ \$(ls /backup -N1 | wc -l) -gt \${MAX_BACKUPS} ];
       do
         BACKUP_TO_BE_DELETED=\$(ls /backup -N1 | sort | head -n 1)
-        echo "   Backup \${BACKUP_TO_BE_DELETED} is deleted"
+        echo "=>   \${BACKUP_TO_BE_DELETED} wil be deleted"
         rm -rf /backup/\${BACKUP_TO_BE_DELETED}
       done
       echo "=>   Old dumps has been deleted"
+      echo "=>   Backup done with successful"
     fi
     ${BACKUP_RESTIC_CMD}
 else
