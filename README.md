@@ -5,14 +5,14 @@ This image runs pg_dump to backup data using cronjob to folder `/backup`
 ## Usage:
 
     docker run -d \
-        --env PG_HOST=mysql.host \
+        --env PG_HOST=pgsql.host \
         --env PG_PORT=27017 \
         --env PG_USER=admin \
         --env PG_PASSWORD=password \
         --volume host.folder:/backup
         jmcarbo/docker-postgres-backup
 
-Moreover, if you link `jmcarbo/docker-postgres-backup` to a postgres container (e.g. `tutum/mysql`) with an alias named pg, this image will try to auto load the `host`, `port`, `user`, `pass` if possible.
+Moreover, if you link `jmcarbo/docker-postgres-backup` to a postgres container (e.g. `postgres`) with an alias named pg, this image will try to auto load the `host`, `port`, `user`, `pass` if possible.
 
     docker run -d -p 27017:27017 -p 28017:28017 -e PG_PASS="mypass" --name pg postgres
     docker run -d --link pg:pg -v host.folder:/backup jmcarbo/docker-postgres-backup
