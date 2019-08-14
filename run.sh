@@ -101,22 +101,24 @@ fi
 
 echo "=> Backup started: \${BACKUP_NAME}"
 if ${BACKUP_CMD} ;then
-    echo "   Backup succeeded"
+    echo "=>   Dump done"
+    echo "=>   Deleting old dumps"
+
+    if [ -n "\${MAX_BACKUPS}" ]; then
+      while [ \$(ls /backup -N1 | wc -l) -gt \${MAX_BACKUPS} ];
+      do
+        BACKUP_TO_BE_DELETED=\$(ls /backup -N1 | sort | head -n 1)
+        echo "=>   \${BACKUP_TO_BE_DELETED} wil be deleted"
+        rm -rf /backup/\${BACKUP_TO_BE_DELETED}
+      done
+      echo "=>   Old dumps has been deleted"
+      echo "=>   Backup done with successful"
+    fi
     ${BACKUP_RESTIC_CMD}
 else
-    echo "   Backup failed"
+    echo "=>  WARNING BACKUP FAILED - SEE LOGS"
     rm -rf /backup/\${BACKUP_NAME}
 fi
-
-if [ -n "\${MAX_BACKUPS}" ]; then
-    while [ \$(ls /backup -N1 | wc -l) -gt \${MAX_BACKUPS} ];
-    do
-        BACKUP_TO_BE_DELETED=\$(ls /backup -N1 | sort | head -n 1)
-        echo "   Backup \${BACKUP_TO_BE_DELETED} is deleted"
-        rm -rf /backup/\${BACKUP_TO_BE_DELETED}
-    done
-fi
-echo "=> Backup done"
 EOF
 chmod +x /backup.sh
 
